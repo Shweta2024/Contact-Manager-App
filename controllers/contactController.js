@@ -21,6 +21,14 @@ const getContact = (req, res) => {
 // @route /api/contacts
 // @access public
 const createContact = (req, res) => {
+    const { name, email, phone } = req.body
+    console.log({name, email, phone})
+    
+    if (!name || !email || !phone) {
+        res.status(400)
+        throw new Error("All fiels are required" )   
+    }
+
     res.send('create a contact')
 }
 
