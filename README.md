@@ -9,3 +9,6 @@
 | Update a Contact  | PUT  | /api/contacts/:id  |
 | Delete a Contact  | DELETE  | /api/contacts/:id  |
 
+
+// controllers -> contains all logic of req & res and dp operations
+
