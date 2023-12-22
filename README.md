@@ -9,6 +9,12 @@
 | Update a Contact  | PUT  | /api/contacts/:id  |
 | Delete a Contact  | DELETE  | /api/contacts/:id  |
 
+@TODO:
+
+- create login & registration route
+- create user model
+- JWT authentication
+- control access to routes
 
 // controllers -> contains all logic of req & res and dp operations
 

@@ -80,16 +80,17 @@ const updateContact = async (req, res, next) => {
             throw new Error('Invalid contact Id.')
         }
 
+        const contact = await Contact.findById(contactID)
+        if (!contact) {
+            res.status(404)
+            throw new Error(`No Contact found with id: ${contactID}`)
+        }
+
         const updatedContact = await Contact.findOneAndUpdate(
             {_id: contactID},
             req.body,
             { new: true }
         )
-
-        if (!updatedContact) {
-            res.status(404)
-            throw new Error(`No Contact found with id: ${contactID}`)
-        }
         res.status(200).json(updatedContact)
     } catch (err) {
         next(err)
@@ -99,8 +100,28 @@ const updateContact = async (req, res, next) => {
 // @desc Delete a contact
 // @route /api/contacts/:id
 // @access public 
-const deleteContact = async (req, res) => {
-    res.send(`delete contact of ${req.params.id}`)
+const deleteContact = async (req, res, next) => {
+    try {
+        const contactID = req.params.id
+        console.log(contactID)
+
+        if (!objectId.isValid(contactID)) {
+            res.status(400)
+            throw new Error('Invalid contact Id.')
+        }
+
+        const contact = await Contact.findById(contactID)
+        if (!contact) {
+            res.status(404)
+            throw new Error(`No Contact found with id: ${contactID}`)
+        }
+
+        await Contact.findOneAndDelete({_id: contactID})
+
+        res.status(200).json(`successfully deleted contact with id ${contactID}`)
+    } catch (err) {
+        next(err)
+    }
 }
 
 module.exports = {
