@@ -1,4 +1,6 @@
 const Contact = require('../models/contactModel')
+const mongoose = require('mongoose')
+const objectId = mongoose.Types.ObjectId
 
 // @desc Get all contacts
 // @route /api/contacts
@@ -19,9 +21,14 @@ const getAllContacts =  async (req, res, next) => {
 const getContact = async (req, res, next) => {
     try {
         const contactID = req.params.id
-        console.log(contactID)
+
+        // check whether a valid mongoose id or not
+        if (!objectId.isValid(contactID)) {
+            res.status(400)
+            throw new Error('Invalid contact Id.')
+        }
+
         const contact = await Contact.findById(contactID)
-        console.log(contact)
         
         if (!contact) {
             res.status(404)
