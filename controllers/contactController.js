@@ -2,6 +2,7 @@ const Contact = require('../models/contactModel')
 const mongoose = require('mongoose')
 const objectId = mongoose.Types.ObjectId
 
+
 // @desc Get all contacts
 // @route /api/contacts
 // @access public
@@ -50,7 +51,7 @@ const createContact =  async (req, res, next) => {
 
         if (!name || !email || !phone) {
             res.status(400)
-            throw new Error("All fiels are required")
+            throw new Error('All fiels are required')
         }
 
         const contact = new Contact({
@@ -69,8 +70,30 @@ const createContact =  async (req, res, next) => {
 // @desc Update a contact
 // @route /api/contacts/:id
 // @access public
-const updateContact = async (req, res) => {
-    res.send(`update contact of ${req.params.id}`)
+const updateContact = async (req, res, next) => {
+    try {
+        const contactID = req.params.id
+        console.log(contactID)
+
+        if (!objectId.isValid(contactID)) {
+            res.status(400)
+            throw new Error('Invalid contact Id.')
+        }
+
+        const updatedContact = await Contact.findOneAndUpdate(
+            {_id: contactID},
+            req.body,
+            { new: true }
+        )
+
+        if (!updatedContact) {
+            res.status(404)
+            throw new Error(`No Contact found with id: ${contactID}`)
+        }
+        res.status(200).json(updatedContact)
+    } catch (err) {
+        next(err)
+    }
 }
 
 // @desc Delete a contact
