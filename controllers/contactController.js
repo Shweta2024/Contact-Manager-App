@@ -4,7 +4,7 @@
 // @desc Get all contacts
 // @route /api/contacts
 // @access public
-const getAllContacts = (req, res) => {
+const getAllContacts = async (req, res) => {
     res.send('get all contacts')
 }
 
@@ -12,7 +12,7 @@ const getAllContacts = (req, res) => {
 // @desc Get a contact
 // @route /api/contacts/:id
 // @access public
-const getContact = (req, res) => {
+const getContact = async (req, res) => {
     res.send(`get contact of ${req.params.id}`)
 }
 
@@ -20,7 +20,7 @@ const getContact = (req, res) => {
 // @desc Create a contact
 // @route /api/contacts
 // @access public
-const createContact = (req, res) => {
+const createContact = async (req, res) => {
     const { name, email, phone } = req.body
     console.log({name, email, phone})
     
@@ -37,14 +37,14 @@ const createContact = (req, res) => {
 // @desc Update a contact
 // @route /api/contacts/:id
 // @access public
-const updateContact = (req, res) => {
+const updateContact = async (req, res) => {
     res.send(`update contact of ${req.params.id}`)
 }
 
 // @desc Delete a contact
 // @route /api/contacts/:id
 // @access public 
-const deleteContact = (req, res) => {
+const deleteContact = async (req, res) => {
     res.send(`delete contact of ${req.params.id}`)
 }
 
